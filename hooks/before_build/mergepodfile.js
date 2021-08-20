@@ -5,8 +5,7 @@ const fs = require('fs');
 module.exports = function (ctx) {
 
     console.log("Started merging pod files to add the post_install script");
-    
-    var rootdir = "";
+    var rootdir = ctx.opts.projectRoot;
     var outputPath = path.join(ctx.opts.plugin.dir, "src", "ios", "mergedPodfile")
     var projectPodfile = path.join(rootdir, "platforms", "ios", "Podfile");
 
