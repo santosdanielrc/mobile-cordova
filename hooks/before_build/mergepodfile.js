@@ -22,7 +22,7 @@ module.exports = function (ctx) {
         }
         
         //remove the old Podfile (To make it compatible with MABS)
-        fs.unlinkSync(outputPath);
+        fs.unlinkSync(projectPodfile);
         fs.copyFileSync(outputPath, projectPodfile, fs.constants.COPYFILE_FICLONE, function(err){
             if (err){
                 throw (err);
