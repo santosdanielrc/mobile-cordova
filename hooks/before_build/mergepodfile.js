@@ -22,7 +22,7 @@ module.exports = function (ctx) {
             throw ("Error merging files");
         }
         
-        fs.copyFile(outputPath, projectPodfile, fs.constants.COPYFILE_FICLONE, function(err){
+        fs.copyFileSync(outputPath, projectPodfile, fs.constants.COPYFILE_FICLONE, function(err){
             if (err){
                 throw (err);
             }
