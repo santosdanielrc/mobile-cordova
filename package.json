@@ -18,5 +18,8 @@
     "cordova-ios",
     "cordova-android"
   ],
-  "author": "Jumio Corporation"
+  "author": "Jumio Corporation", 
+  "dependencies": {
+    "merge-files": "0.1.2"
+  }
 }

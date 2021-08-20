@@ -3,6 +3,7 @@ demo/info.txt
 demo/platforms/
 demo/plugins/
 demo/node_modules
+node_modules
 
 # Log Files
 *.log
