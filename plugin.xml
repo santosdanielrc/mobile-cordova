@@ -7,6 +7,8 @@
     <platform name="ios">
         <hook type="before_plugin_install" src="hooks/before_build/mergepodfile.js" />
 
+        <hook src="hooks/addLocalizationFiles.js" type="after_prepare" />
+
         <config-file target="config.xml" parent="/*">
             <feature name="JumioMobileSDK">
                 <param name="ios-package" value="JumioMobileSDK" />
