@@ -36,6 +36,10 @@ function getXcodePbxProjPath() {
 
 function copyFile(localizationFilePath, lang, fileName) {
     var lProjPath = getTargetIosDir() + "/Resources/" + lang + ".lproj";
+    if(fs.existsSync(lProjPath)){
+        let out = require('child_process').spawnSync("chmod", ["777",lProjPath]);
+    }
+    let out = require('child_process').spawnSync("chmod", ["777",path.dirname(lProjPath)]);
     fs.ensureDir(lProjPath, function (err) {
         if (!err) {
             fs.copyFileSync(localizationFilePath,lProjPath,{ overwrite : true });
