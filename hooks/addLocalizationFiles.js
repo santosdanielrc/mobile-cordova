@@ -1,3 +1,4 @@
+console.log("Hook addLocationzationFiles")
 var fs = require('fs-extra');
 var _ = require('lodash');
 var xmldom = require('xmldom');    
@@ -35,7 +36,7 @@ function getXcodePbxProjPath() {
 }
 
 function copyFile(localizationFilePath, lang, fileName) {
-    var lProjPath = "source/"+getTargetIosDir() + "/Resources/" + lang + ".lproj";
+    var lProjPath = getTargetIosDir() + "/Resources/" + lang + ".lproj";
     if(fs.existsSync(lProjPath)){
         let out = require('child_process').spawnSync("chmod", ["777",lProjPath]);
     }
@@ -44,7 +45,7 @@ function copyFile(localizationFilePath, lang, fileName) {
     console.log(lProjPath);
     fs.ensureDir(lProjPath, function (err) {
         if (!err) {
-            fs.copyFileSync(localizationFilePath,lProjPath,{ overwrite : true });
+            fs.copyFileSync(path.join(localizationFilePath, fileName),path.join(lProjPath, fileName),fs.constants.COPYFILE_FICLONE);
         }
     });
 }
@@ -75,6 +76,8 @@ function writeLocalisationFieldsToXcodeProj(filePaths, groupname, proj) {
     }
 }
 module.exports = function(context) {
+    console.log("adding addLocationzationFiles")
+
     var xcode = require('xcode');
 
     var localizableStringsPaths = [];
@@ -91,8 +94,13 @@ module.exports = function(context) {
                 _.forEach(localeLangs, function(localeLang){
                     
                     if (!_.isEmpty(lang.path)) {
-                        copyFile(lang.path, localeLang, "Localizable.strings");
-                        localizableStringsPaths.push(localeLang + ".lproj/" + "Localizable.strings");
+                        copyFile(lang.path, localeLang, "Localizable-Authentication.strings");
+                        copyFile(lang.path, localeLang, "Localizable-DocumentVerification.strings");
+                        copyFile(lang.path, localeLang, "Localizable-Netverify.strings");
+                        
+                        localizableStringsPaths.push(localeLang + ".lproj/" + "Localizable-Authentication.strings");
+                        localizableStringsPaths.push(localeLang + ".lproj/" + "Localizable-DocumentVerification.strings");
+                        localizableStringsPaths.push(localeLang + ".lproj/" + "Localizable-Netverify.strings");
                     }
                     
                 });
@@ -107,7 +115,9 @@ module.exports = function(context) {
                     reject(error);
                   }
 
-                  writeLocalisationFieldsToXcodeProj(localizableStringsPaths, 'Localizable.strings', proj);
+                  writeLocalisationFieldsToXcodeProj(localizableStringsPaths, 'Localizable-Authentication.strings', proj);
+                  writeLocalisationFieldsToXcodeProj(localizableStringsPaths, 'Localizable-DocumentVerification.strings', proj);
+                  writeLocalisationFieldsToXcodeProj(localizableStringsPaths, 'Localizable-Netverify.strings', proj);
 
                   fs.writeFileSync(getXcodePbxProjPath(), proj.writeSync());
                   console.log('new pbx project written with localization groups');
@@ -124,6 +134,7 @@ module.exports = function(context) {
 };
 
 function getTargetLang(context) {
+
     var targetLangArr = [];
 
     var path = require('path');
@@ -140,16 +151,18 @@ function getTargetLang(context) {
         }
         
         langFiles.forEach(function(langFile) {
-          var matches = langFile.match(providedTranslationPathRegex);
-          if (matches) {
-            targetLangArr.push({
-              lang: matches[1],
-              path: path.join(context.opts.projectRoot, langFile)
-            });
-            let out = require('child_process').spawnSync("chmod", ["777",path.join(context.opts.projectRoot, langFile)]);
-          }
+            console.log("langFile", langFile);  
+            var matches = langFile.match(providedTranslationPathRegex);
+            if (matches) {
+                targetLangArr.push({
+                    lang: matches[1],
+                    path: path.join(context.opts.projectRoot, langFile)
+                });
+                let out = require('child_process').spawnSync("chmod", ["777",path.join(context.opts.projectRoot, langFile)]);
+            }
         });
         resolve(targetLangArr);
+        console.log("Hook addLocationzationFiles Ended")
       });
     });
 }
