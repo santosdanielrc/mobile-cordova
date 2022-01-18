@@ -7,17 +7,11 @@
 @import JumioCore;
 @import Netverify;
 @import NetverifyFace;
-@import BAMCheckout;
-@import DocumentVerification;
 
-@interface JumioMobileSDK : CDVPlugin <NetverifyViewControllerDelegate, BAMCheckoutViewControllerDelegate, DocumentVerificationViewControllerDelegate>
+@interface JumioMobileSDK : CDVPlugin <NetverifyViewControllerDelegate>
 
 @property (strong) NetverifyViewController* netverifyViewController;
 @property (strong) NetverifyConfiguration* netverifyConfiguration;
-@property (strong) BAMCheckoutViewController* bamViewController;
-@property (strong) BAMCheckoutConfiguration* bamConfiguration;
-@property (strong) DocumentVerificationConfiguration* documentVerifcationConfiguration;
-@property (strong) DocumentVerificationViewController* documentVerificationViewController;
 @property (strong) NSString* callbackId;
 
 @end
