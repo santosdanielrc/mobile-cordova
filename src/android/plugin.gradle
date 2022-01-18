@@ -11,7 +11,6 @@ ext {
 
 dependencies {
     implementation "com.jumio.android:core:${SDK_VERSION}@aar"
-    implementation "com.jumio.android:bam:${SDK_VERSION}@aar"
     implementation "com.jumio.android:nv:${SDK_VERSION}@aar"
     implementation "com.jumio.android:nv-mrz:${SDK_VERSION}@aar"
     implementation "com.jumio.android:nv-nfc:${SDK_VERSION}@aar"
@@ -19,7 +18,6 @@ dependencies {
     implementation "com.jumio.android:nv-barcode:${SDK_VERSION}@aar"
     implementation "com.jumio.android:nv-barcode-vision:${SDK_VERSION}@aar"
     implementation "com.jumio.android:iproov:${SDK_VERSION}@aar"
-    implementation "com.jumio.android:dv:${SDK_VERSION}@aar"
 
     //for core:
     implementation "androidx.appcompat:appcompat:1.2.0"
